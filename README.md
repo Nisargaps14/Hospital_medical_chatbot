@@ -28,9 +28,10 @@ http://localhost:8000
 
 The site is deployed to GitHub Pages by the workflow in
 `.github/workflows/pages.yml` whenever changes are pushed to `main`. If Pages
-has not been enabled for the repository yet, open **Settings > Pages** and set
-the build and deployment source to **GitHub Actions**. The demo will then be
-available at the link above.
+has not been enabled for the repository yet, a repository owner must open
+**Settings > Pages** and set the build and deployment source to **GitHub
+Actions**. Then rerun the workflow from the **Actions** tab. The demo will be
+available at the link above after deployment succeeds.
 
 ## Notes
 
