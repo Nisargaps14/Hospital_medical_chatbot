@@ -548,6 +548,16 @@
         voiceInputBtn.classList.toggle('is-recording', isActive);
       }
 
+      function requestNewApiKey() {
+        localStorage.removeItem(keyKey);
+        keySaved.hidden = true;
+        keyArea.hidden = false;
+        apiKeyInput.value = '';
+        apiKeyInput.placeholder = 'Enter a valid Groq API key';
+        apiKeyInput.focus();
+        addMessage('Groq rejected the saved API key. It may be invalid, expired, or revoked. Enter and save a valid key, then try again.', 'bot');
+      }
+
       async function startGroqVoiceInput() {
         const key = localStorage.getItem(keyKey)?.trim();
         if (!key) {
@@ -598,6 +608,10 @@
               });
               const data = await response.json();
               if (!response.ok) {
+                if (response.status === 401) {
+                  requestNewApiKey();
+                  return;
+                }
                 throw new Error(data?.error?.message || 'Groq voice transcription failed.');
               }
 
@@ -782,6 +796,10 @@
           const data = await response.json();
 
           if (!response.ok) {
+            if (response.status === 401) {
+              requestNewApiKey();
+              return;
+            }
             const msg = data?.error?.message || 'Invalid API key or request failed.';
             throw new Error(msg);
           }
